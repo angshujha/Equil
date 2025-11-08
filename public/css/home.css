@@ -1,0 +1,37 @@
+/* 🏠 Home Page (Landing) */
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 6%;
+  background-color: #F1F5F9;
+  min-height: 75vh;
+  flex-wrap: wrap;
+}
+
+.hero-content h1 { font-size: 2.8rem; color: #1E293B; margin-bottom: 1rem; }
+.hero-content .subtitle { font-size: 1.1rem; color: #64748B; margin-bottom: 2rem; }
+
+.btn-primary, .btn-outline {
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary { background-color: #22C55E; color: white; }
+.btn-primary:hover { background-color: #16A34A; }
+
+.btn-outline {
+  border: 2px solid #22C55E;
+  color: #22C55E;
+}
+.btn-outline:hover { background-color: #22C55E; color: white; }
+
+.features, .cta-section {
+  text-align: center;
+  padding: 3rem 6%;
+  background-color: #fff;
+}

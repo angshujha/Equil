@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Log in to track your carbon footprint</p>
+
+    <form method="POST" action="/login">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Enter your password" required>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <p class="switch-text">
+      Don’t have an account? <a href="/register">Create one</a>
+    </p>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

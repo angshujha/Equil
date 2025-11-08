@@ -1,0 +1,59 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Track Your Carbon Footprint 🌍</h1>
+    <p class="subtitle">
+      Understand how your daily actions impact the planet and take steps towards a sustainable future.
+    </p>
+
+    <% if(!currentUser) { %>
+      <div class="hero-buttons">
+        <a href="/register" class="btn-primary">Get Started</a>
+        <a href="/login" class="btn-outline">Login</a>
+      </div>
+    <% } else { %>
+      <div class="hero-buttons">
+        <a href="/activities/new" class="btn-primary">Add Activity</a>
+        <a href="/dashboard" class="btn-outline">View Dashboard</a>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="hero-image">
+    <img src="https://cdn-icons-png.flaticon.com/512/751/751381.png" alt="Eco illustration" />
+  </div>
+</section>
+
+<section class="features">
+  <h2>How It Works</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/4149/4149674.png" alt="Track">
+      <h3>1️⃣ Track</h3>
+      <p>Log your travel, energy, and diet habits to calculate your daily carbon footprint.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png" alt="Analyze">
+      <h3>2️⃣ Analyze</h3>
+      <p>Get insights and see which activities contribute most to your CO₂ emissions.</p>
+    </div>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3468/3468373.png" alt="Improve">
+      <h3>3️⃣ Improve</h3>
+      <p>Receive personalized eco-tips to live greener and reduce your footprint.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to Make a Change? 🌱</h2>
+  <p>Start tracking your activities today and join the movement towards a cleaner planet.</p>
+  <% if(!currentUser) { %>
+    <a href="/register" class="btn-primary">Join Now</a>
+  <% } else { %>
+    <a href="/dashboard" class="btn-primary">Go to Dashboard</a>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

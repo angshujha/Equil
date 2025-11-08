@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Create Your Account 🌿</h2>
+    <p class="subtitle">Join EcoTrack and make a positive impact</p>
+
+    <form method="POST" action="/register">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Your name" required>
+
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required>
+
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Create a password" required>
+
+      <button type="submit" class="btn-submit">Register</button>
+    </form>
+
+    <p class="switch-text">
+      Already have an account? <a href="/login">Login</a>
+    </p>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

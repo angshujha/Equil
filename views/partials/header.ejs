@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoTrack</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/chatbox.css">
+
+  <% if (typeof pageCSS !== 'undefined' && pageCSS) { %>
+
+    <% pageCSS.forEach(file => { %>
+      <link rel="stylesheet" href="/css/<%= file %>.css">
+    <% }) %>
+  <% } %>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/" class="logo">🌍 EcoTrack</a>
+  </div>
+  <div class="nav-right">
+    <% if(currentUser) { %>
+      <a href="/activities/new" class="nav-link">Add Activity</a>
+      <a href="/dashboard" class="nav-link">Dashboard</a>
+      <a href="/logout" class="btn-nav">Logout</a>
+    <% } else { %>
+      <a href="/login" class="nav-link">Login</a>
+      <a href="/register" class="btn-nav">Register</a>
+    <% } %>
+  </div>
+</nav>
+
+<div class="flash-container">
+  <% if(success) { %>
+    <div class="flash flash-success"><%= success %></div>
+  <% } %>
+  <% if(error) { %>
+    <div class="flash flash-error"><%= error %></div>
+  <% } %>
+</div>
