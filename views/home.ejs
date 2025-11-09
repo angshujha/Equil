@@ -1,59 +1,160 @@
-<%- include('partials/header') %>
+<%- include('partials/header', { 
+  title: "Equil | Home", 
+  pageCSS: ["home"], 
+  currentUser: currentUser 
+}) %>
 
-<section class="hero">
-  <div class="hero-content">
-    <h1>Track Your Carbon Footprint 🌍</h1>
-    <p class="subtitle">
-      Understand how your daily actions impact the planet and take steps towards a sustainable future.
-    </p>
+<!-- 🌿 Custom Navbar and Sidebar for Home Page -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-title">Equil</span>
+    <button class="sidebar-close-button" id="sidebar-close-btn">
+      <span class="material-icons-outlined">close</span>
+    </button>
+  </div>
+  <ul class="sidebar-nav">
+    <li><a href="/" class="sidebar-nav-link"><span class="material-icons-outlined">home</span><span>Home</span></a></li>
+    <li><a href="#" class="sidebar-nav-link"><span class="material-icons-outlined">person</span><span>My Profile</span></a></li>
+    <li><a href="#" class="sidebar-nav-link"><span class="material-icons-outlined">settings</span><span>Settings</span></a></li>
+    <li><a href="#" class="sidebar-nav-link"><span class="material-icons-outlined">help_outline</span><span>Help and Support</span></a></li>
+    <li>
+      <button class="sidebar-nav-link sidebar-theme-toggle" id="theme-toggle-btn">
+        <span class="material-icons-outlined" id="theme-toggle-icon">dark_mode</span>
+        <span id="theme-toggle-text">Dark Mode</span>
+      </button>
+    </li>
+  </ul>
+</nav>
 
-    <% if(!currentUser) { %>
-      <div class="hero-buttons">
-        <a href="/register" class="btn-primary">Get Started</a>
-        <a href="/login" class="btn-outline">Login</a>
+<!-- 🌍 Home Page Body -->
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1 class="header-title">Welcome, <%= currentUser ? currentUser.name : "User" %>!</h1>
+    <button class="hamburger-button" id="hamburger-btn">
+      <span class="material-icons-outlined">menu</span>
+    </button>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="hero-card">
+      <div class="hero-bg-image"></div>
+      <div class="hero-content">
+        <h2 class="hero-title">Your Complete Eco-System for Sustainable Living</h2>
+        <p class="hero-subtitle">You're taking the first step towards a greener lifestyle. Log your first activity to begin.</p>
+
+        <% if (!currentUser) { %>
+          <a href="/register" class="button-primary aj">Start Your Journey</a>
+        <% } else { %>
+          <a href="/dashboard" class="button-primary">Go to Dashboard</a>
+        <% } %>
       </div>
-    <% } else { %>
-      <div class="hero-buttons">
-        <a href="/activities/new" class="btn-primary">Add Activity</a>
-        <a href="/dashboard" class="btn-outline">View Dashboard</a>
+    </section>
+
+    <!-- Discover Tools -->
+    <section>
+      <h3 class="section-title">Discover Tools</h3>
+      <div class="tools-grid">
+        <div class="tool-card"><span class="material-icons-outlined icon-blue">air</span><span class="tool-name">Air Buddy</span></div>
+        <div class="tool-card"><span class="material-icons-outlined icon-green">delete_outline</span><span class="tool-name">WasteLess</span></div>
+        <div class="tool-card"><span class="material-icons-outlined icon-orange">shopping_basket</span><span class="tool-name">Local Harvest</span></div>
+        <div class="tool-card"><span class="material-icons-outlined icon-indigo">directions_car</span><span class="tool-name">Green Lane</span></div>
       </div>
-    <% } %>
-  </div>
+    </section>
 
-  <div class="hero-image">
-    <img src="https://cdn-icons-png.flaticon.com/512/751/751381.png" alt="Eco illustration" />
-  </div>
-</section>
+    <!-- Why Equil -->
+    <section>
+      <h3 class="section-title">Why Equil is Exceptional</h3>
+      <div class="why-grid">
+        <div class="why-card"><span class="material-icons-outlined icon-blue">shield</span><span class="why-name">Privacy First</span></div>
+        <div class="why-card"><span class="material-icons-outlined icon-red">favorite_border</span><span class="why-name">Community Driven</span></div>
+        <div class="why-card"><span class="material-icons-outlined icon-purple">gamepad</span><span class="why-name">Gamified Experience</span></div>
+      </div>
+    </section>
 
-<section class="features">
-  <h2>How It Works</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/4149/4149674.png" alt="Track">
-      <h3>1️⃣ Track</h3>
-      <p>Log your travel, energy, and diet habits to calculate your daily carbon footprint.</p>
-    </div>
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828640.png" alt="Analyze">
-      <h3>2️⃣ Analyze</h3>
-      <p>Get insights and see which activities contribute most to your CO₂ emissions.</p>
-    </div>
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3468/3468373.png" alt="Improve">
-      <h3>3️⃣ Improve</h3>
-      <p>Receive personalized eco-tips to live greener and reduce your footprint.</p>
-    </div>
-  </div>
-</section>
+    <!-- How it Works -->
+    <section>
+      <div class="toggle-card" id="how-it-works-toggle" role="button" aria-expanded="false" aria-controls="how-it-works-section">
+        <p class="toggle-question">How Equil Works</p>
+        <span class="material-icons-outlined toggle-icon">expand_more</span>
+      </div>
+    </section>
 
-<section class="cta-section">
-  <h2>Ready to Make a Change? 🌱</h2>
-  <p>Start tracking your activities today and join the movement towards a cleaner planet.</p>
-  <% if(!currentUser) { %>
-    <a href="/register" class="btn-primary">Join Now</a>
-  <% } else { %>
-    <a href="/dashboard" class="btn-primary">Go to Dashboard</a>
-  <% } %>
-</section>
+    <section class="how-it-works-section collapsible-section" id="how-it-works-section">
+      <div class="collapsible-content">
+        <h3 class="section-title">How Equil Works</h3>
+        <div class="timeline-container">
+          <div class="timeline-path-line"></div>
+          <div class="timeline-items-wrapper">
+            <div class="timeline-item">
+              <div class="timeline-number" style="--number-bg: #3b82f6;">1</div>
+              <div class="timeline-card">
+                <span class="material-icons-outlined" style="color: #3b82f6;">person_add</span>
+                <span class="timeline-text">Sign Up & Personalize</span>
+              </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+              <div class="timeline-number" style="--number-bg: #3b82f6;">2</div>
+              <div class="timeline-card timeline-card-right">
+                <span class="timeline-text">Track Daily Activities</span>
+                <span class="material-icons-outlined" style="color: #3b82f6;">edit_note</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number" style="--number-bg: #22c55e;">3</div>
+              <div class="timeline-card">
+                <span class="material-icons-outlined" style="color: #22c55e;">calculate</span>
+                <span class="timeline-text">Carbon Footprint Calculation</span>
+              </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+              <div class="timeline-number" style="--number-bg: #22c55e;">4</div>
+              <div class="timeline-card timeline-card-right">
+                <span class="timeline-text">AI-Powered Insights</span>
+                <span class="material-icons-outlined" style="color: #22c55e;">psychology</span>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number" style="--number-bg: #3b82f6;">5</div>
+              <div class="timeline-card">
+                <span class="material-icons-outlined" style="color: #3b82f6;">place</span>
+                <span class="timeline-text">Discover Eco Hubs Nearby</span>
+              </div>
+            </div>
+            <div class="timeline-item timeline-item-right">
+              <div class="timeline-number" style="--number-bg: #3b82f6;">6</div>
+              <div class="timeline-card timeline-card-right">
+                <span class="timeline-text">Achievements & Motivation</span>
+                <span class="material-icons-outlined" style="color: #3b82f6;">emoji_events</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+      <h3 class="section-title">Frequently Asked Questions</h3>
+      <div class="faq-card">
+        <p class="faq-question">How does Equil help me live more sustainably?</p>
+        <a class="faq-link" href="#">View all FAQs</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Floating Elements -->
+<div class="floating-elements-container">
+  <span class="floating-leaf"></span><span class="floating-leaf"></span><span class="floating-leaf"></span>
+  <span class="floating-leaf"></span><span class="floating-leaf"></span><span class="floating-leaf"></span>
+  <span class="floating-leaf"></span>
+  <span class="floating-particle"></span><span class="floating-particle"></span><span class="floating-particle"></span>
+  <span class="floating-particle"></span><span class="floating-particle"></span><span class="floating-particle"></span>
+  <span class="floating-particle"></span><span class="floating-particle"></span>
+</div>
+
+<!-- JS -->
+<script src="/js/home.js"></script>
 
 <%- include('partials/footer') %>

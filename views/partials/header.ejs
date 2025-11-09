@@ -5,6 +5,11 @@
   <title>EcoTrack</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/chatbox.css">
+  <link rel="stylesheet" href="/css/flash.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+
 
   <% if (typeof pageCSS !== 'undefined' && pageCSS) { %>
 
@@ -31,12 +36,6 @@
     <% } %>
   </div>
 </nav>
+<%- include('flash') %>
 
-<div class="flash-container">
-  <% if(success) { %>
-    <div class="flash flash-success"><%= success %></div>
-  <% } %>
-  <% if(error) { %>
-    <div class="flash flash-error"><%= error %></div>
-  <% } %>
-</div>
+
