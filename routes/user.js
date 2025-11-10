@@ -15,9 +15,11 @@ router.get("/", (req, res) => {
 // 🧾 Register form
 router.get("/register", (req, res) => {
   res.render("users/register", {
-    title: "Register | EcoTrack",
-    pageCSS: ["auth"], // ✅ loads auth.css
-    currentUser: req.user
+    title : "Sign Up | Equil", 
+    pageCSS : ["auth"], 
+     currentUser: req.user,
+   hideNavbar : true,// 👈 hides the navbar for auth pages
+  hideFooter : true // 👈 hides the footer for auth pages
   });
 });
 
@@ -40,6 +42,7 @@ router.post("/register", async (req, res) => {
     console.log(err);
     req.flash("error", "Registration failed");
     res.redirect("/register");
+    
   }
 });
 
