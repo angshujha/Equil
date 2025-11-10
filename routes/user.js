@@ -46,8 +46,10 @@ router.post("/register", async (req, res) => {
 // 🔐 Login form
 router.get("/login", (req, res) => {
   res.render("users/login", {
-    title: "Login | EcoTrack",
+    title: " Sign In | EcoTrack",
     pageCSS: ["auth"], // ✅ loads auth.css
+     hideNavbar: true,   // 👈 hide navbar
+    hideFooter: true,   // 👈 hide footer
     currentUser: req.user
   });
 });

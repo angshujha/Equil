@@ -21,12 +21,13 @@
 </head>
 <body>
 
+<% if (!hideNavbar) { %>  <!-- 👈 show navbar only when not hidden -->
 <nav class="navbar">
   <div class="nav-left">
     <a href="/" class="logo">🌍 EcoTrack</a>
   </div>
   <div class="nav-right">
-    <% if(currentUser) { %>
+    <% if (currentUser) { %>
       <a href="/activities/new" class="nav-link">Add Activity</a>
       <a href="/dashboard" class="nav-link">Dashboard</a>
       <a href="/logout" class="btn-nav">Logout</a>
@@ -36,6 +37,7 @@
     <% } %>
   </div>
 </nav>
+<% } %>
 <%- include('flash') %>
 
 
