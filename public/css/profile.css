@@ -293,3 +293,38 @@ body {
         font-size: 24px;
     }
 }
+/* 🌿 FIX: Prevent Right Alignment Issue on Centered Pages */
+body.profile-page {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important; /* top aligned */
+  background-color: #f0f0f0 !important;
+  padding: 40px 0 !important;
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+}
+
+/* Ensure inner profile container is centered */
+.profile-container,
+.container,
+.profile-card {
+  margin: 0 auto !important;
+  display: block !important;
+  position: relative !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+}
+
+/* Prevent margin/padding from global layout */
+main, .page-container {
+  margin: 0 auto !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Hide Navbar/Footer if not needed */
+body.profile-page .navbar,
+body.profile-page .footer {
+  display: none !important;
+}

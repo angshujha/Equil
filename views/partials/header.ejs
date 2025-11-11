@@ -1,45 +1,54 @@
-<% var hideNavbar = (typeof hideNavbar !== 'undefined') ? hideNavbar : false; %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>EcoTrack</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/chatbox.css">
-  <link rel="stylesheet" href="/css/flash.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
-
-
-  <% if (typeof pageCSS !== 'undefined' && pageCSS) { %>
-
-    <% pageCSS.forEach(file => { %>
-      <link rel="stylesheet" href="/css/<%= file %>.css">
-    <% }) %>
-  <% } %>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
 <body>
+  
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Equil</span>
+        <button class="sidebar-close-button" id="sidebar-close-btn">
+          <span class="material-icons-outlined">close</span>
+        </button>
+      </div>
 
-<% if (!hideNavbar) { %>  <!-- 👈 show navbar only when not hidden -->
-<nav class="navbar">
-  <div class="nav-left">
-    <a href="/" class="logo">🌍 EcoTrack</a>
-  </div>
-  <div class="nav-right">
-    <% if (currentUser) { %>
-      <a href="/activities/new" class="nav-link">Add Activity</a>
-      <a href="/dashboard" class="nav-link">Dashboard</a>
-      <a href="/logout" class="btn-nav">Logout</a>
-    <% } else { %>
-      <a href="/login" class="nav-link">Login</a>
-      <a href="/register" class="btn-nav">Register</a>
-    <% } %>
-  </div>
-</nav>
-<% } %>
-<%- include('flash') %>
+      <ul class="sidebar-nav">
+        <% if (currentUser) { %>
+        <li><a href="/" class="sidebar-nav-link"><span class="material-icons-outlined">home</span><span>Home</span></a></li>
+        <li><a href="/profile" class="sidebar-nav-link"><span class="material-icons-outlined">person</span><span>My Profile</span></a></li>
+        <li><a href="#" class="sidebar-nav-link"><span class="material-icons-outlined">settings</span><span>Settings</span></a></li>
+        <li><a href="#" class="sidebar-nav-link"><span class="material-icons-outlined">help_outline</span><span>Help and Support</span></a></li>
+        <li><a href="/activity/new" class="sidebar-nav-link"><span class="material-icons-outlined">Add</span><span>Add Activity</span></a></li>
+        <li>
+          <button class="sidebar-nav-link sidebar-theme-toggle" id="theme-toggle-btn">
+            <span class="material-icons-outlined" id="theme-toggle-icon">dark_mode</span>
+            <span id="theme-toggle-text">Dark Mode</span>
+          </button>
+        </li>
+        <% } else { %>
+    <!-- 🚪 User Not Logged In -->
+    <li>
+      <a href="/login" class="sidebar-nav-link">
+        <span class="material-icons-outlined">login</span>
+        <span>Login</span>
+      </a>
+    </li>
+    <li>
+      <a href="/register" class="sidebar-nav-link">
+        <span class="material-icons-outlined">person_add</span>
+        <span>Register</span>
+      </a>
+    </li>
+  <% } %>
+      </ul>
+    </nav>
+
+    <div class="dashboard-container">
+      <header class="dashboard-header">
+       <h1>EQUIL</h1>
+        <button class="hamburger-button" id="hamburger-btn">
+          <span class="material-icons-outlined">menu</span>
+        </button>
+      </header>
+ 
+
 
 

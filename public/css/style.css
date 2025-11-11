@@ -1,11 +1,28 @@
-/* 🌍 Global Styles - EcoTrack */
+/* 🌍 GLOBAL STYLES - EcoTrack (Stable Layout for All Pages) */
 
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Body Style */
 body {
   background-color: #F1F5F9;
   font-family: 'Inter', sans-serif;
   color: #1E293B;
+  line-height: 1.5;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+/* ✅ Safe Defaults for All Pages */
+main {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 /* 🌿 Navbar */
@@ -15,7 +32,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem 2rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -36,7 +53,9 @@ body {
   transition: color 0.3s;
 }
 
-.nav-link:hover { color: #0EA5E9; }
+.nav-link:hover {
+  color: #0EA5E9;
+}
 
 .btn-nav {
   background-color: #22C55E;
@@ -48,7 +67,9 @@ body {
   transition: background-color 0.3s;
 }
 
-.btn-nav:hover { background-color: #16A34A; }
+.btn-nav:hover {
+  background-color: #16A34A;
+}
 
 /* 🌿 Flash Messages */
 .flash-container {
@@ -83,4 +104,78 @@ body {
   font-size: 0.95rem;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
   margin-top: 2rem;
+}
+
+/* ✅ Page Containers for consistent spacing */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 🌿 Hide Navbar/Footer for Special Pages (Login, Signup, Profile, etc.) */
+body.auth-page .navbar,
+body.auth-page .footer,
+body.profile-page .navbar,
+body.profile-page .footer {
+  display: none !important;
+}
+
+/* ✅ Layout Reset for Auth/Profile pages */
+body.auth-page,
+body.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+/* 🌿 Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-green {
+  background-color: #22C55E;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-green:hover {
+  background-color: #16A34A;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid #22C55E;
+  color: #22C55E;
+}
+
+.btn-outline:hover {
+  background-color: #22C55E;
+  color: #fff;
+}
+
+/* 🌿 Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    margin: 0.5rem 0;
+  }
 }

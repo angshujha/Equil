@@ -21,8 +21,8 @@ router.get("/register", (req, res) => {
     title : "Sign Up | Equil", 
     pageCSS : ["auth"], 
      currentUser: req.user,
-   hideNavbar : true,// 👈 hides the navbar for auth pages
-  hideFooter : true // 👈 hides the footer for auth pages
+   
+  
   });
 });
 
@@ -54,8 +54,7 @@ router.get("/login", (req, res) => {
   res.render("users/login", {
     title: " Sign In | EcoTrack",
     pageCSS: ["auth"], // ✅ loads auth.css
-     hideNavbar: true,   // 👈 hide navbar
-    hideFooter: true,   // 👈 hide footer
+   
     currentUser: req.user
   });
 });
@@ -99,8 +98,8 @@ router.get("/profile", isLoggedIn, async (req, res) => {
       totals,
       currentUser: req.user,
       pageCSS: ["profile"],
-      hideNavbar: true,
-      hideFooter: true
+      bodyClass: "profile-page",
+     
     });
   } catch (err) {
     console.error(err);

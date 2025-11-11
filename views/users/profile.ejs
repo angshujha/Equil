@@ -1,10 +1,6 @@
-<%- include('../partials/header', { 
-  title: "My Profile | Equil", 
-  pageCSS: ["profile"], 
-  currentUser: currentUser 
-}) %>
 
-<div class="container">
+<% pageCSS = ["profile"]; %>
+<div class="profile-container">
   <div class="header">
     <button class="back-button" onclick="window.history.back()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -89,5 +85,3 @@
     </div>
   </div>
 </div>
-
-<%- include('../partials/footer') %>
