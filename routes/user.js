@@ -126,5 +126,26 @@ router.post("/profile", isLoggedIn, async (req, res) => {
   }
 });
 
+router.get('/welcome', (req, res) => {
+  res.render('welcomeToEquil', {
+    title: 'Welcome to Equil',  
+    pageCSS: ['welcomeToEquil'], 
+    currentUser: req.user
+  });
+});
+router.get('/getStarted', (req, res) => {
+  res.render('getStarted', {
+    title: 'Get Started',
+    pageCSS: ['getstarted'],
+    currentUser: req.user
+  });
+});
+router.get('/trackingFootprint', (req, res) => {
+  res.render('trackingFootprint', {
+    title: 'Tracking Footprint',
+    pageCSS: ['trackingFootprint'],
+    currentUser: req.user
+  });
+}); 
 
 module.exports = router;
