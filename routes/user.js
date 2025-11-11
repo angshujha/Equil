@@ -147,5 +147,19 @@ router.get('/trackingFootprint', (req, res) => {
     currentUser: req.user
   });
 }); 
+router.get('/settings', (req, res) => {
+  res.render('setting', {
+    title: 'Settings',
+    pageCSS: ['setting'],
+    currentUser: req.user
+  });
+});
+router.get('/About', (req, res) => {
+  res.render('About', {
+    title: 'About EcoTrack',
+    pageCSS: ['About'],
+    currentUser: req.user
+  });
+}); 
 
 module.exports = router;
