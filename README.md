@@ -1,4 +1,4 @@
-# 🌍 EcoTrack — Personal Carbon Footprint Tracker
+# 🌍 EQUIL — Personal Carbon Footprint Tracker
 
 EcoTrack is a MERN-based (Node.js, Express, MongoDB, EJS) web app that helps individuals **track, analyze, and reduce their carbon footprint** based on daily activities such as **travel, energy usage, and diet**.
 
@@ -6,7 +6,7 @@ EcoTrack is a MERN-based (Node.js, Express, MongoDB, EJS) web app that helps ind
 
 ## 🚀 Overview
 
-EcoTrack empowers users to understand their environmental impact and make eco-friendly lifestyle changes.  
+EQUIL empowers users to understand their environmental impact and make eco-friendly lifestyle changes.  
 The platform calculates estimated **CO₂ emissions** from each activity and offers **AI-driven suggestions** for reducing them.
 
 ---

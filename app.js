@@ -12,6 +12,7 @@ const activityRoutes = require("./routes/activity");
 const chatRoutes = require("./routes/chat");
 const expressLayouts = require("express-ejs-layouts");
 const leaderboardRoutes = require("./routes/leaderboard");
+const communityRoutes = require("./routes/community");
 
 dotenv.config();
 const app = express();
@@ -78,5 +79,6 @@ app.use("/", userRoutes);
 app.use("/", activityRoutes);
 app.use("/", chatRoutes);
 app.use("/", leaderboardRoutes);
+app.use("/community", communityRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
