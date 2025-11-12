@@ -1,0 +1,34 @@
+<% pageCSS = ["market"]; %>
+
+<section class="market-container">
+  <h2 class="market-title">Carbon Offset Marketplace</h2>
+
+  <% if(currentUser) { %>
+    <p class="user-points">Your points: <strong><%= currentUser.points || 0 %></strong></p>
+  <% } else { %>
+    <p class="login-call"> <a href="/login">Log in</a> to redeem items and support eco causes.</p>
+  <% } %>
+
+  <div class="items-grid">
+    <% items.forEach(item => { %>
+      <div class="market-item">
+        <h3><%= item.title %></h3>
+        <p class="desc"><%= item.description %></p>
+        <div class="item-footer">
+          <span class="cost"><strong><%= item.costPoints %></strong> pts</span>
+          <% if(currentUser) { %>
+            <form method="POST" action="/market/<%= item._id %>/redeem" class="redeem-form">
+              <input type="hidden" name="itemId" value="<%= item._id %>">
+              <input type="text" name="message" placeholder="Optional note (e.g., plant for my friend)" class="redeem-note">
+              <button class="btn-primary">Redeem</button>
+            </form>
+          <% } else { %>
+            <a href="/login" class="btn-primary">Login to Redeem</a>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+

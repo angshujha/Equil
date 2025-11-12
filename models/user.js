@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema(
       default: 0,
     },
     badges: { type: [badgeSchema], default: [] },
+    points: { type: Number, default: 0 }, // <-- new field
      streak: {
     current: { type: Number, default: 0 },      // current active streak count (days)
     lastActivityAt: { type: Date, default: null } // last day when user logged an activity
