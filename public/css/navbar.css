@@ -220,3 +220,27 @@ body {
   overflow: hidden;        
   text-overflow: ellipsis; 
 }
+/* Prevent background scroll when sidebar open */
+body.sidebar-open {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Make sidebar content scrollable */
+.sidebar {
+  overflow-y: auto;
+  max-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #a1a1a1 transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.3);
+  border-radius: 10px;
+}
