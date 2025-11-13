@@ -6,6 +6,13 @@ const badgeSchema = new mongoose.Schema({
   description: String,
   earnedAt: Date
 }, { _id: false });
+const transactionSchema = new mongoose.Schema({
+  name: String,
+  type: { type: String, enum: ["earn", "redeem"], required: true },
+  points: { type: Number, required: true },
+  date: { type: Date, default: Date.now }
+});
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -49,6 +56,9 @@ const userSchema = new mongoose.Schema(
     lastActivityAt: { type: Date, default: null } // last day when user logged an activity
   },
   weeklyCO2Cache: { type: Number, default: 0 },
+  pointsEarned: { type: Number, default: 0 },
+  pointsRedeemed: { type: Number, default: 0 },
+  transactions: [transactionSchema],
   lastQuizAt: { type: Date, default: null },
   createdAt: { type: Date, default: Date.now }
   },

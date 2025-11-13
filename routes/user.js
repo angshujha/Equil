@@ -170,5 +170,8 @@ router.get('/help', (req, res) => {
     currentUser: req.user
   });
 });
+// Temporary route to add dummy transactions (for testing)
+
+
 
 module.exports = router;
