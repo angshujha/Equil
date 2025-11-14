@@ -1,7 +1,8 @@
 /* --- Global Styles (Themed) --- */
 body {
     margin: 0;
-    background-color: var(--color-green-50);
+    /* CHANGE: Set a background color for the area *outside* the phone view */
+    background-color: var(--color-gray-200, #e5e7eb); 
     color: var(--color-text-body);
     font-family: Inter, "Noto Sans", sans-serif;
     transition: background-color 0.2s ease, color 0.2s ease;
@@ -23,6 +24,17 @@ body {
     height: auto;
     justify-content: space-between;
     overflow-x: hidden;
+
+    /* --- NEW STYLES FOR PHONE-LIKE CONTAINER --- */
+    /* 1. Constrain the width to a typical phone size */
+    max-width: 480px;
+    /* 2. Center the container horizontally on larger screens */
+    margin: 0 auto;
+    /* 3. Ensure the phone screen has its original background */
+    background-color: var(--color-green-50, #f0fdf4); 
+    /* 4. Optional: Add a subtle shadow for a framed effect */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+    /* --- END NEW STYLES --- */
 }
 
 .main-content {
@@ -281,7 +293,7 @@ body {
 /* --- Select Input --- */
 .select-container {
     display: flex;
-    max-width: 480px;
+    /* Removed max-width: 480px; as it's now on .design-root */
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 1rem;
@@ -400,7 +412,7 @@ body {
     
 }
 .button-group a {
-  text-decoration: none;
+    text-decoration: none;
 }
 .button.button-next {
     background-color: var(--color-primary);
@@ -414,6 +426,9 @@ body {
 
 /* --- Responsive Media Queries --- */
 @media (min-width: 480px) {
+    /* Since .design-root is capped at 480px, these styles kick in when the
+       browser is wider than a phone, keeping the inner content responsive
+       within the fixed width. */
     .image-container {
         padding-left: 1rem;
         padding-right: 1rem;

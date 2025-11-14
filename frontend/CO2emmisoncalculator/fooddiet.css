@@ -1,9 +1,11 @@
+/* theme.css - UPDATED */
+
 /* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900");
 
-/* NOTE: The :root block with --select-button-svg was removed 
-  because it is now handled in theme.css 
-*/
+/* NOTE: The :root block with --select-button-svg was removed
+ * because it is now handled in theme.css
+ */
 
 /* Basic Reset */
 body,
@@ -15,12 +17,13 @@ html {
 
 body {
   font-family: Inter, "Noto Sans", sans-serif;
-  background-color: var(--color-green-50);
+  /* Use a neutral/slightly darker background for the area outside the "phone" screen */
+  background-color: var(--color-gray-200, #e5e7eb); /* A light gray for desktop background */
   color: var(--color-text-title);
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth toggle */
 }
 
-/* Page Layout */
+/* Page Layout - CRITICAL CHANGE HERE */
 .design-root {
   position: relative;
   display: flex;
@@ -29,13 +32,30 @@ body {
   min-height: 100vh;
   justify-content: space-between;
   overflow-x: hidden;
+
+  /* --- NEW STYLES FOR PHONE-LIKE CONTAINER --- */
+  /* Constraint the width to a typical phone size (e.g., 400px or 480px) */
+  max-width: 480px; /* Maximum width of the 'phone screen' */
+  margin: 0 auto; /* Center the container horizontally on larger screens */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow to frame it */
+  background-color: var(--color-green-50, #f0fdf4); /* Ensure the inner background is correct */
+  /* --- END NEW STYLES --- */
 }
+
+/* theme.css - REVISED FIX */
+
+/* ... (previous CSS unchanged) ... */
 
 /* Header */
 .app-header {
+  /* 🛑 REVISED STYLES FOR STACKING AND CENTERING 🛑 */
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column; /* Keep: Stack children vertically */
+  align-items: center;    /* Keep: Center items horizontally */
+  justify-content: center; /* CHANGE: Use 'center' instead of 'space-between' to center everything */
+  /* END REVISED STYLES */
+
+  /* Original styles kept or adapted */
   background-color: var(--color-bg);
   padding: 1rem;
   padding-bottom: 0.5rem;
@@ -43,6 +63,11 @@ body {
 }
 
 .icon-wrapper {
+  /* If you want the icon wrapper to be visible but not take up layout space
+     when it's empty, you might consider setting its display to none when empty,
+     or ensuring its content actually has an icon.
+     For now, we'll keep its sizing as is, but it will be centered.
+  */
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -53,15 +78,21 @@ body {
 }
 
 .app-header h2 {
-  flex: 1;
+  /* 🛑 REVISED STYLES 🛑 */
   text-align: center;
-  padding-right: 3rem; /* pr-12 to offset the icon width */
+  padding-right: 0; /* REMOVED: pr-12 offset is definitely not needed now */
   margin: 0;
+  margin-top: 0.5rem; /* Keep: Small margin for spacing between icon and text */
+  /* END REVISED STYLES */
+  
+  flex: none; /* CHANGE: Do not allow h2 to grow and push other items */
   font-size: 1.125rem; /* text-lg */
   font-weight: 700; /* font-bold */
   line-height: 1.75rem; /* leading-tight */
   letter-spacing: -0.015em; /* tracking-[-0.015em] */
 }
+
+/* ... (rest of CSS unchanged) ... */
 
 /* Progress Bar */
 .progress-bar {
@@ -80,7 +111,7 @@ body {
   height: 0.5rem; /* h-2 */
   border-radius: 9999px; /* rounded-full */
   background-color: var(--color-progress-track);
-  
+
 }
 
 .progress-dot.active {
@@ -143,7 +174,7 @@ body {
 /* Form Elements */
 .form-group {
   display: flex;
-  max-width: 480px;
+  /* Removed max-width: 480px; since it's now on .design-root */
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 1rem; /* gap-4 */
@@ -349,9 +380,14 @@ select::placeholder {
 }
 
 /* Media Queries (from @container rules) */
+/* The main media queries for desktop responsiveness are now mostly moot 
+    because of the max-width on .design-root, but we keep them 
+    for consistency if the max-width is ever increased. */
 
 /* @[480px] */
 @media (min-width: 480px) {
+  /* This breakpoint now essentially applies when the device width is > 480px,
+       meaning the design-root is centered with its max-width of 480px. */
   .slider-container {
     flex-direction: row;
     align-items: center;
@@ -361,6 +397,10 @@ select::placeholder {
   }
   .slider-value-desktop {
     display: block;
+  }
+  /* Ensure the body background is visible outside the centered container */
+  body {
+    background-color: var(--color-gray-200, #e5e7eb); 
   }
 }
 
@@ -375,3 +415,4 @@ select::placeholder {
     padding: 1rem;
   }
 }
+

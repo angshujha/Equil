@@ -1,23 +1,34 @@
+/* --- UPDATED CSS --- */
+
 /* Full-screen layout - no gaps or scrollbars */
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  /* Use min-height: 100vh for the body */
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
-  background-color: var(--color-green-100);
+  overflow-x: hidden; /* Only hide horizontal scrollbar */
+  background-color: var(--color-gray-200, #e5e7eb);
   font-family: 'Inter', sans-serif;
 }
 
 /* App container simulating a real mobile app */
 .app-container {
-  height: 100vh;
-  width: 100vw;
+  /* CRUCIAL CHANGES FOR PHONE VIEWPORT */
+  max-width: 450px; /* Caps the content width */
+  min-height: 100vh; /* Ensures it takes full viewport height */
+  width: 100%; /* Ensures responsiveness below 450px */
+  margin: 0 auto; /* Centers the container horizontally */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle boundary */
+  
+  /* Original styles */
   display: flex;
   flex-direction: column;
-  background-color: #F9FAF9;
+  background-color: #F9FAF9; /* The "screen" color */
   overflow-y: auto;
 }
+
+/* ... rest of your existing CSS ... */
 
 /* Header */
 .header {
