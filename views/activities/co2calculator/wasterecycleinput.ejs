@@ -1,0 +1,101 @@
+
+<% pageCSS = ["watercycleinput", "theme"]; %>
+
+<div class="design-root">
+
+    <div class="main-content">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="icon-wrapper"></div>
+            <h2 class="header-title">Waste and Recycling</h2>
+        </header>
+
+        <!-- PROGRESS DOTS -->
+        <div class="progress-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot active"></div>
+        </div>
+
+        <!-- HERO IMAGE -->
+        <div class="image-container-wrapper">
+            <div class="image-container">
+                <div class="hero-image"
+                    style='background-image: url("https://i.postimg.cc/HnmGwtrL/Gemini-Generated-Image-8dlofa8dlofa8dlo.png");'>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE TITLE + TEXT -->
+        <h3 class="page-title">Waste and Recycling</h3>
+        <p class="page-description">
+            Tell us about your waste and recycling habits to help us calculate
+            your carbon footprint
+        </p>
+
+        <!-- SLIDER -->
+        <div class="slider-container-wrapper">
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <p class="slider-label">Weekly Waste Production (kg)</p>
+                </div>
+
+                <div class="slider-track-container">
+                    <div class="slider-track">
+                        <div class="slider-progress" style="width: 32%;"></div>
+                        <div class="slider-thumb" style="left: 32%;"></div>
+                    </div>
+
+                    <div class="slider-value-desktop">32%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOGGLE 1 -->
+        <div class="toggle-item">
+            <p class="toggle-label">Do you recycle regularly?</p>
+            <div class="toggle-switch-container">
+                <label class="toggle-switch">
+                    <div class="toggle-handle"></div>
+                    <input type="checkbox" class="toggle-checkbox" />
+                </label>
+            </div>
+        </div>
+
+        <!-- TOGGLE 2 -->
+        <div class="toggle-item">
+            <p class="toggle-label">Do you compost food waste?</p>
+            <div class="toggle-switch-container">
+                <label class="toggle-switch">
+                    <div class="toggle-handle"></div>
+                    <input type="checkbox" class="toggle-checkbox" />
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="button-group">
+                <a href="/calculator/fooddiet">
+                    <button class="button button-previous"><span>Previous</span></button>
+                </a>
+
+                <a href="/calculator/results">
+                    <button class="button button-next"><span>View Results</span></button>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-spacer"></div>
+    </footer>
+
+</div>
+
+<!-- PAGE SCRIPTS -->
+<script src="/js/theme.js"></script>
+<script src="/js/watercycleinput.js"></script>

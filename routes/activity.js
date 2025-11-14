@@ -130,5 +130,20 @@ router.get("/dashboard", isLoggedIn, async (req, res) => {
     res.redirect("/");
   }
 });
+// 🌿 New CO₂ Emission Section
+router.get("/co2emission", isLoggedIn, async (req, res) => {
+  const activities = await Activity.find({ user: req.user._id }).sort({ date: -1 });
+  res.render("activities/co2home", { title: "CO₂ Emission Tracker", pageCSS: ["co2home"], currentUser: req.user, activities });
+});
+
+router.get("/co2emission/log", isLoggedIn, async (req, res) => {
+  const activities = await Activity.find({ user: req.user._id }).sort({ date: -1 });
+  res.render("activities/co2log", { title: "My CO₂ Log", pageCSS: ["co2log"], currentUser: req.user, activities });
+});
+
+router.get("/co2emission/add", isLoggedIn, (req, res) => {
+  res.render("activities/co2add", { title: "Add CO₂ Activity", pageCSS: ["co2add"], currentUser: req.user });
+});
+
 
 module.exports = router;

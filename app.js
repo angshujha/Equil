@@ -10,11 +10,14 @@ const User = require("./models/user");
 const userRoutes = require("./routes/user");
 const activityRoutes = require("./routes/activity");
 const chatRoutes = require("./routes/chat");
-const expressLayouts = require("express-ejs-layouts");
+const ejslayouts = require("express-ejs-layouts");
 const leaderboardRoutes = require("./routes/leaderboard");
 const communityRoutes = require("./routes/community");
 const marketRoutes = require("./routes/market");
 const quizRoutes = require("./routes/quiz");
+const calculatorRoutes = require("./routes/calculator");
+
+
 
 dotenv.config();
 const app = express();
@@ -28,9 +31,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(ejslayouts);
+app.set("layout", "layouts/boilerplate.ejs");
 
-app.use(expressLayouts);
-app.set("layout", "layouts/boilerplate");
 // Middlewares
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
@@ -73,5 +76,6 @@ app.use("/", leaderboardRoutes);
 app.use("/community", communityRoutes);
 app.use("/", marketRoutes);
 app.use("/", quizRoutes);
+app.use("/", calculatorRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
