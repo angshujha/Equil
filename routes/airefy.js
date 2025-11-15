@@ -3,8 +3,10 @@ const router = express.Router();
 const axios = require("axios");
 const FavouriteLocation = require("../models/FavoriteLocation");
 const { isLoggedIn } = require("../middleware/auth");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const OPEN_WEATHER_API_KEY = "40d546179fd9f57d701a86e6de266b1f";
+const OPEN_WEATHER_API_KEY =process.env.OPEN_WEATHER_API_KEY ;
 
 // ---------------- MOCK FALLBACK DATA ----------------
 const MOCK = {
