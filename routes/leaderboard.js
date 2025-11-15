@@ -4,10 +4,10 @@ const router = express.Router();
 const Activity = require("../models/activity");
 const User = require("../models/user");
 
-// Helper: start of current week (or last 7 days) — choose last 7 days for clarity
+// Helper: start of current week (last 7 days)
 function getStartOfWindow(days = 7) {
   const d = new Date();
-  d.setHours(0,0,0,0);
+  d.setHours(0, 0, 0, 0);
   d.setDate(d.getDate() - (days - 1));
   return d;
 }
@@ -21,27 +21,30 @@ router.get("/leaderboard", async (req, res) => {
     const agg = await Activity.aggregate([
       { $match: { date: { $gte: start } } },
       { $group: { _id: "$user", weeklyCO2: { $sum: "$co2" } } },
-      { $sort: { weeklyCO2: 1 } }, // ascending -> least CO2 at top
+      { $sort: { weeklyCO2: 1 } },
       { $limit: 5 }
     ]);
 
-    // Resolve user details
+    // Get users' lastCalculation too
     const userIds = agg.map(x => x._id);
-    const users = await User.find({ _id: { $in: userIds } }).select("username badges badgesEarned");
+    const users = await User.find({ _id: { $in: userIds } })
+      .select("username badges badgesEarned lastCalculation");
 
-    // map user id -> username
+    // map user id -> user object
     const userMap = {};
     users.forEach(u => { userMap[u._id.toString()] = u; });
 
     const leaderboard = agg.map(x => {
-      const u = userMap[x._id.toString()] || {};
-      return {
-        userId: x._id,
-        username: u.username || "Unknown",
-        weeklyCO2: x.weeklyCO2 || 0,
-        badgesEarned: u.badgesEarned || 0
-      };
-    });
+  const u = userMap[x._id.toString()] || {};
+  return {
+    userId: x._id,
+    username: u.username || "Unknown",
+    weeklyCO2: x.weeklyCO2 || 0,
+    badgesEarned: u.badgesEarned || 0,
+    badges: u.badges || []   // <-- add actual badge objects
+  };
+});
+
 
     res.render("leaderboard", {
       title: "Leaderboard | EcoTrack",

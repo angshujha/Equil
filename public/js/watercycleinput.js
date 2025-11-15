@@ -1,130 +1,114 @@
-// Wait for the document to be fully loaded before running script
-document.addEventListener('DOMContentLoaded', () => {
+// =====================================================================
+//  WASTE & RECYCLING — Final JS (Fully Working)
+// =====================================================================
 
-    // --- 1. Button Logic (from your previous file) ---
-    const prevButton = document.querySelector('.button-previous');
-    const nextButton = document.querySelector('.button-next');
+// ------- SLIDER ELEMENTS -------
+const sliderTrack = document.querySelector(".slider-track");
+const sliderProgress = document.querySelector(".slider-progress");
+const sliderThumb = document.querySelector(".slider-thumb");
+const sliderValueDisplay = document.querySelector(".slider-value-desktop");
 
-    if (prevButton) {
-        prevButton.addEventListener('click', () => {
-            // You could, for example, go to the previous page
-            // window.location.href = 'previous-page.html';
-            console.log('Previous button clicked');
-        });
-    }
+// Value range → 0–100 kg
+const minKg = 0;
+const maxKg = 100;
 
-    if (nextButton) {
-        nextButton.addEventListener('click', () => {
-            // Go to the results page
-            // window.location.href = 'results-page.html';
-            console.log('View Results button clicked');
-        });
-    }
+let isDragging = false;
+let currentKg = 32; // DEFAULT KG
 
-    // The toggle switches work with pure CSS (:has selector)
-    // so no JS is needed for them.
+// ------- UPDATE SLIDER (MAIN FUNCTION) -------
+function setSlider(percentage) {
+    percentage = Math.max(0, Math.min(100, percentage));
 
-    // --- 2. Slider Logic (newly added) ---
-    
-    // Select Slider Elements
-    const sliderTrack = document.querySelector('.slider-track');
-    const sliderProgress = document.querySelector('.slider-progress');
-    const sliderThumb = document.querySelector('.slider-thumb');
-    const sliderValueDisplay = document.querySelector('.slider-value-desktop');
+    // Convert % → KG
+    currentKg = Math.round((percentage / 100) * (maxKg - minKg) + minKg);
 
-    // Check if slider elements exist before adding listeners
-    if (sliderTrack && sliderProgress && sliderThumb && sliderValueDisplay) {
+    // Apply UI updates
+    sliderProgress.style.width = percentage + "%";
+    sliderThumb.style.left = percentage + "%";
+    sliderValueDisplay.textContent = currentKg + " kg";
 
-        // --- NEW: Define the range for KG ---
-        const minKg = 0;
-        const maxKg = 100;
-        // ------------------------------------
+    // Store inside a hidden field for backend
+    document.getElementById("wasteKgInput").value = currentKg;
+}
 
-        let isDragging = false;
+// ------- PERCENTAGE CALCULATION -------
+function updateSliderFromEvent(clientX) {
+    const rect = sliderTrack.getBoundingClientRect();
+    const percent = ((clientX - rect.left) / rect.width) * 100;
+    setSlider(percent);
+}
 
-        // Main Update Function
-        function setSliderValue(percentage) {
-            let clampedPercentage = Math.max(0, Math.min(100, percentage));
-            let percentString = clampedPercentage.toFixed(0) + '%';
+// ------- MOUSE EVENTS -------
+sliderTrack.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    sliderThumb.classList.add("is-dragging");
+    updateSliderFromEvent(e.clientX);
 
-            // --- NEW: Calculate KG value ---
-            let kgValue = (clampedPercentage / 100) * (maxKg - minKg) + minKg;
-            let kgString = kgValue.toFixed(0) + 'kg'; // e.g., "32kg"
-            // -------------------------------
-            
-            sliderProgress.style.width = percentString;
-            sliderThumb.style.left = percentString;
-            sliderValueDisplay.textContent = kgString; // <-- Update to show KG
-        }
+    document.addEventListener("mousemove", mouseMove);
+    document.addEventListener("mouseup", mouseUp);
+});
 
-        // Calculate percentage from event
-        function updateSliderFromEvent(clientX) {
-            const trackRect = sliderTrack.getBoundingClientRect();
-            const trackWidth = trackRect.width;
+function mouseMove(e) {
+    if (isDragging) updateSliderFromEvent(e.clientX);
+}
 
-            if (trackWidth === 0) return;
+function mouseUp() {
+    isDragging = false;
+    sliderThumb.classList.remove("is-dragging");
 
-            const x = clientX - trackRect.left;
-            let percentage = (x / trackWidth) * 100;
-            setSliderValue(percentage);
-        }
+    document.removeEventListener("mousemove", mouseMove);
+    document.removeEventListener("mouseup", mouseUp);
+}
 
-        // Mouse Event Handlers
-        function onMouseDown(event) {
-            event.preventDefault();
-            isDragging = true;
-            sliderThumb.classList.add('is-dragging');
-            updateSliderFromEvent(event.clientX);
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
-        }
+// ------- TOUCH EVENTS -------
+sliderTrack.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    sliderThumb.classList.add("is-dragging");
+    updateSliderFromEvent(e.touches[0].clientX);
 
-        function onMouseMove(event) {
-            if (!isDragging) return;
-            updateSliderFromEvent(event.clientX);
-        }
+    document.addEventListener("touchmove", touchMove, { passive: false });
+    document.addEventListener("touchend", touchEnd);
+});
 
-        function onMouseUp() {
-            isDragging = false;
-            sliderThumb.classList.remove('is-dragging');
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        }
-        
-        // Touch Event Handlers
-        function onTouchStart(event) {
-            isDragging = true;
-            sliderThumb.classList.add('is-dragging');
-            updateSliderFromEvent(event.touches[0].clientX);
-            document.addEventListener('touchmove', onTouchMove, { passive: false });
-            document.addEventListener('touchend', onTouchEnd);
-        }
-        
-        function onTouchMove(event) {
-            if (!isDragging) return;
-            event.preventDefault(); 
-            updateSliderFromEvent(event.touches[0].clientX);
-        }
-        
-        function onTouchEnd() {
-            isDragging = false;
-            sliderThumb.classList.remove('is-dragging');
-            document.removeEventListener('touchmove', onTouchMove);
-            document.removeEventListener('touchend', onTouchEnd);
-        }
+function touchMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    updateSliderFromEvent(e.touches[0].clientX);
+}
 
-        // Attach Initial Listeners
-        sliderTrack.addEventListener('mousedown', onMouseDown);
-        sliderTrack.addEventListener('touchstart', onTouchStart, { passive: false });
+function touchEnd() {
+    isDragging = false;
+    sliderThumb.classList.remove("is-dragging");
 
-        // Set Initial Value
-        // --- MODIFIED: Read initial % from style, not text ---
-        let initialPercentStyle = sliderProgress.style.width || '0%';
-        let initialPercent = parseFloat(initialPercentStyle) || 0;
-        setSliderValue(initialPercent);
+    document.removeEventListener("touchmove", touchMove);
+    document.removeEventListener("touchend", touchEnd);
+}
 
-    } else {
-        // This is helpful for debugging if the slider isn't working
-        console.warn("Slider elements not found. Skipping slider script.");
-    }
+// ------- INITIAL SLIDER VALUE -------
+setSlider(32); // default 32 kg
+
+
+// =====================================================================
+//  TOGGLE LOGIC — Return TRUE / FALSE
+// =====================================================================
+
+const recycleToggle = document.getElementById("recycleToggle");
+const compostToggle = document.getElementById("compostToggle");
+
+// write values to hidden inputs so backend receives them
+recycleToggle.addEventListener("change", () => {
+    document.getElementById("recycleInput").value = recycleToggle.checked ? "yes" : "no";
+});
+
+compostToggle.addEventListener("change", () => {
+    document.getElementById("compostInput").value = compostToggle.checked ? "yes" : "no";
+});
+
+
+// =====================================================================
+//  NEXT BUTTON → SUBMIT FORM
+// =====================================================================
+
+document.querySelector(".button-next").addEventListener("click", () => {
+    document.getElementById("wasteForm").submit();
 });

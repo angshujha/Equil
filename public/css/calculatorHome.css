@@ -1,11 +1,11 @@
-
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  /* Remove height/width 100% on body if you want the background to fill everything */
+  min-height: 100vh; /* Ensure body covers the viewport height */
   width: 100%;
   overflow-x: hidden;
-  background-color: var(--color-green-50);
+  background-color: var(--color-gray-200, #e5e7eb);
   /* THEMED */
   font-family: 'Inter', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -14,12 +14,20 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  /* Crucial changes for phone-like structure */
+  max-width: 450px; /* Set a maximum width typical of a phone */
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  width: 100%; /* Important for responsiveness on smaller screens */
+  margin: 0 auto; /* Center the container horizontally */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow to define the 'phone screen' */
+  background-color: var(--color-background-light); /* Optional: Set a consistent background color for the 'screen' area if the body background is different */
+  /* End of crucial changes */
+  
   box-sizing: border-box;
   overflow-y: auto;
   padding: 1rem 1.2rem;
 }
+
 
 /* Header */
 .header {

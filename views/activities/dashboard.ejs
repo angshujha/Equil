@@ -5,6 +5,12 @@
     <h2>Dashboard 🌍</h2>
     <p>Total CO₂ Emissions: <strong><%= totals.total ? totals.total.toFixed(2) : 0 %> kg</strong></p>
   </div>
+  <div class="card">
+    <h3>Your Last CO₂ Score</h3>
+    <p><%= lastCalc ? lastCalc.totalCarbon.toFixed(2) : "No record yet" %> kg CO₂</p>
+    <a href="/startCalculator">Recalculate</a>
+</div>
+
 
   <div class="summary-section">
     <div class="summary-card travel">

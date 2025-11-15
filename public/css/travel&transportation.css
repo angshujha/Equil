@@ -1,14 +1,15 @@
 /* This file is your 'travel&transportation.css', refactored to 
-   use the semantic variables from 'theme.css'.
+    use the semantic variables from 'theme.css'.
 */
 
 /* Full-screen layout, no gaps */
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  /* CHANGE 1: Use min-height for correct background coverage outside the centered app */
+  min-height: 100vh;
   width: 100%;
-  background-color: var(--color-green-50); /* THEMED */
+  background-color: var(--color-gray-200, #e5e7eb);
   font-family: 'Inter', sans-serif;
   /* Add transition for smooth theme changes */
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -21,14 +22,25 @@ h1 {
 
 /* App container */
 .app-container {
-  min-height: 100vh;
-  width: 100vw;
+  /* CRUCIAL CHANGES FOR PHONE VIEWPORT: */
+  max-width: 450px; /* Caps the content width at a standard mobile size */
+  width: 100%; /* Ensures responsiveness below 450px */
+  margin: 0 auto; /* Centers the container horizontally on wide screens */
+  min-height: 100vh; /* Ensures the container is full height */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: App boundary shadow */
+  /* Replaced original width/height rules: */
+  /* width: 100vw; (Removed) */
+  /* height: 100%; (Removed) */
+  
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg); /* THEMED */
-  overflow: hidden;
+  /* CHANGE 2: Use overflow-x: hidden on body, and only overflow-y: auto here */
+  /* overflow: hidden; (Removed) */
   overflow-y: auto;
 }
+
+/* ... rest of your existing CSS remains the same ... */
 
 /* Header */
 .app-header {

@@ -1,6 +1,7 @@
+<% pageCSS = ["theme", "wasterecycleinput"]; %>
 
-<% pageCSS = ["watercycleinput", "theme"]; %>
 
+<form id="wasteForm" action="/calculator/wasterecycle" method="POST">
 <div class="design-root">
 
     <div class="main-content">
@@ -11,7 +12,7 @@
             <h2 class="header-title">Waste and Recycling</h2>
         </header>
 
-        <!-- PROGRESS DOTS -->
+        <!-- PROGRESS -->
         <div class="progress-dots">
             <div class="dot"></div>
             <div class="dot"></div>
@@ -19,7 +20,7 @@
             <div class="dot active"></div>
         </div>
 
-        <!-- HERO IMAGE -->
+        <!-- IMAGE -->
         <div class="image-container-wrapper">
             <div class="image-container">
                 <div class="hero-image"
@@ -28,11 +29,12 @@
             </div>
         </div>
 
-        <!-- PAGE TITLE + TEXT -->
-        <h3 class="page-title">Waste and Recycling</h3>
+<br>
+
+        
+        
         <p class="page-description">
-            Tell us about your waste and recycling habits to help us calculate
-            your carbon footprint
+            Tell us about your waste and recycling habits.
         </p>
 
         <!-- SLIDER -->
@@ -43,59 +45,75 @@
                 </div>
 
                 <div class="slider-track-container">
+                    <!-- TRACK -->
                     <div class="slider-track">
                         <div class="slider-progress" style="width: 32%;"></div>
                         <div class="slider-thumb" style="left: 32%;"></div>
                     </div>
 
-                    <div class="slider-value-desktop">32%</div>
+                    <!-- VALUE -->
+                    <div class="slider-value-desktop">32 kg</div>
                 </div>
             </div>
         </div>
 
-        <!-- TOGGLE 1 -->
+        <!-- HIDDEN INPUT (actual KG value) -->
+        <input type="hidden" id="wasteKgInput" name="weeklyWasteKg" value="32">
+
+        <!-- RECYCLE TOGGLE -->
         <div class="toggle-item">
             <p class="toggle-label">Do you recycle regularly?</p>
             <div class="toggle-switch-container">
                 <label class="toggle-switch">
+                    <input type="checkbox" id="recycleToggle" class="toggle-checkbox">
                     <div class="toggle-handle"></div>
-                    <input type="checkbox" class="toggle-checkbox" />
                 </label>
             </div>
         </div>
 
-        <!-- TOGGLE 2 -->
+        <!-- HIDDEN -->
+        <input type="hidden" id="recycleInput" name="recycle" value="no">
+
+        <!-- COMPOST TOGGLE -->
         <div class="toggle-item">
             <p class="toggle-label">Do you compost food waste?</p>
             <div class="toggle-switch-container">
                 <label class="toggle-switch">
+                    <input type="checkbox" id="compostToggle" class="toggle-checkbox">
                     <div class="toggle-handle"></div>
-                    <input type="checkbox" class="toggle-checkbox" />
                 </label>
             </div>
         </div>
 
-    </div>
+        <!-- HIDDEN -->
+        <input type="hidden" id="compostInput" name="compost" value="no">
+
+    </div> <!-- main-content END -->
 
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
             <div class="button-group">
+
+                <!-- Previous -->
                 <a href="/calculator/fooddiet">
-                    <button class="button button-previous"><span>Previous</span></button>
+                    <button type="button" class="button button-previous">
+                        <span>Previous</span>
+                    </button>
                 </a>
 
-                <a href="/calculator/results">
-                    <button class="button button-next"><span>View Results</span></button>
-                </a>
+                <!-- NEXT submits form -->
+                <button type="button" class="button button-next">
+                    <span>View Results</span>
+                </button>
+
             </div>
         </div>
-
         <div class="footer-spacer"></div>
     </footer>
 
-</div>
+</div> <!-- design-root END -->
+</form>
 
-<!-- PAGE SCRIPTS -->
 <script src="/js/theme.js"></script>
 <script src="/js/watercycleinput.js"></script>

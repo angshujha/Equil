@@ -1,0 +1,238 @@
+/* ----------------------------------------------------------------------------
+   GLOBAL BASE
+---------------------------------------------------------------------------- */
+body {
+    margin: 0;
+    background-color: var(--color-gray-200, #e5e7eb);
+    font-family: Inter, "Noto Sans", sans-serif;
+    color: var(--color-text-body);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------------------------
+   MAIN PHONE CONTAINER
+---------------------------------------------------------------------------- */
+.design-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: var(--color-green-50, #f0fdf4);
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    overflow-x: hidden;
+}
+
+/* ----------------------------------------------------------------------------
+   HEADER
+---------------------------------------------------------------------------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-bg);
+    padding: 1rem;
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-right: 3rem;
+}
+
+/* ----------------------------------------------------------------------------
+   PROGRESS DOTS
+---------------------------------------------------------------------------- */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 0;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: #cbd5e1;
+}
+
+.dot.active {
+    background-color: #22c55e; /* GREEN 500 */
+}
+
+/* ----------------------------------------------------------------------------
+   HERO IMAGE
+---------------------------------------------------------------------------- */
+.hero-image {
+    width: 90%;
+    min-height: 220px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+
+/* ----------------------------------------------------------------------------
+   PAGE TITLES
+---------------------------------------------------------------------------- */
+.page-title {
+    padding: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.page-description {
+    padding: 0 1rem 1rem 1rem;
+    font-size: 1rem;
+    color: #16a34a;
+}
+
+/* ----------------------------------------------------------------------------
+   SLIDER
+---------------------------------------------------------------------------- */
+.slider-container {
+    padding: 1rem;
+}
+
+.slider-track-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.slider-track {
+    position: relative;
+    height: 8px;
+    background-color: #d1d5db;
+    border-radius: 4px;
+    flex-grow: 1;
+}
+
+.slider-progress {
+    height: 100%;
+    border-radius: 4px;
+    background-color: #22c55e; /* GREEN 500 */
+}
+
+.slider-thumb {
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    border: 5px solid #22c55e; /* GREEN 500 */
+    border-radius: 9999px;
+    transform: translate(-50%, -50%);
+}
+
+.slider-value-desktop {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* ----------------------------------------------------------------------------
+   TOGGLE SWITCHES
+---------------------------------------------------------------------------- */
+.toggle-item {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 28px;
+    border-radius: 9999px;
+    background-color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.toggle-handle {
+    width: 24px;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 9999px;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-switch:has(.toggle-checkbox:checked) {
+    justify-content: flex-end;
+    background-color: #22c55e; /* GREEN 500 */
+}
+
+/* ----------------------------------------------------------------------------
+   SELECT INPUT (GREEN BACKGROUND)
+---------------------------------------------------------------------------- */
+.select-input {
+    appearance: none;
+    width: 100%;
+    padding: 1rem;
+    padding-right: 48px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+
+    background-color: #22c55e;   /* FULL GREEN */
+    color: white;
+    font-weight: 600;
+
+    background-image: var(--select-button-svg);
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: right 15px center;
+}
+
+.select-input:focus {
+    outline: none;
+}
+
+/* ----------------------------------------------------------------------------
+   BUTTONS
+---------------------------------------------------------------------------- */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.button {
+    flex: 1;
+    height: 3rem;
+    margin: 0 0.4rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.button-previous {
+    background-color: #22c55e; /* GREEN */
+    color: white;
+}
+
+.button-next {
+    background-color: #16a34a;
+    color: white;
+}
+
+.footer-spacer {
+    height: 1.5rem;
+    background-color: var(--color-bg);
+}

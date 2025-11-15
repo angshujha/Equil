@@ -5,6 +5,16 @@ const User = require("../models/user");
 const { isLoggedIn } = require("../middleware/auth");
 const { evaluateBadges } = require("../utils/badges");
 const { updateUserStreak } = require("../utils/streak");
+const Calculation = require("../models/Calculation.js");
+const { generateInsights } = require("../utils/insights");
+
+
+router.get("/dashboard", isLoggedIn, async (req, res) => {
+  const lastCalc = await Calculation.findOne({ user: req.user._id }).sort({ createdAt: -1 });
+
+  res.render("activities/dashboard", { lastCalc });
+});
+
 
 // CO₂ emission constants (in kg)
 const FACTORS = {

@@ -5,14 +5,14 @@ const MarketItem = require("../models/marketItem");
 const Redemption = require("../models/redemption");
 const User = require("../models/user");
 const { isLoggedIn } = require("../middleware/auth");
-const { recommendRedeem } = require("../utils/redeemRecommender");
+const { generateBadges } = require("../utils/badges");
 const pdfkit = require("pdfkit");
 const fs = require("fs");
 
-
-
+// ---------------------------
 // Market front page: list items
-router.get("/market", async (req, res) => {
+// ---------------------------
+router.get("/market", isLoggedIn, async (req, res) => {
   try {
     const items = await MarketItem.find().sort({ costPoints: 1 });
     res.render("market/index", {
@@ -28,36 +28,39 @@ router.get("/market", async (req, res) => {
   }
 });
 
+// ---------------------------
 // Redeem an item
 router.post("/market/:id/redeem", isLoggedIn, async (req, res) => {
   try {
-    const itemId = req.params.id;
-    const item = await MarketItem.findById(itemId);
-    if (!item) {
-      req.flash("error", "Item not found");
-      return res.redirect("/market");
-    }
+    const item = await MarketItem.findById(req.params.id);
+    if (!item) return res.json({ success: false, error: "Item not found" });
 
     const user = await User.findById(req.user._id);
-    if (!user) {
-      req.flash("error", "User not found");
-      return res.redirect("/market");
-    }
+    if (!user) return res.json({ success: false, error: "User not found" });
+    if ((user.points || 0) < item.costPoints)
+      return res.json({ success: false, error: "Not enough points" });
 
-    if ((user.points || 0) < item.costPoints) {
-      req.flash("error", "Not enough points to redeem this item");
-      return res.redirect("/market");
-    }
+    // Deduct points
+    user.points -= item.costPoints;
 
-    // Deduct points and save user (safe save)
-    user.points = (user.points || 0) - item.costPoints;
+    // Log redeem transaction
+    const redeemTx = {
+      type: "redeem",
+      name: item.title,
+      points: item.costPoints,
+      date: new Date()
+    };
+    user.transactions.push(redeemTx);
 
-    // Optionally give a small message or incremental action, e.g., award badge
-    // user.badges.push({ id: 'supporter', name: 'Eco Supporter', description: 'Redeemed in marketplace', earnedAt: new Date() });
+    // Generate badges
+    const streak = user.streak || { current: 0 };
+    const newBadges = await generateBadges(user, null, streak);
+    if (newBadges.length > 0) user.badges.push(...newBadges);
+    user.badgesEarned = user.badges.length;
 
     await user.save({ validateBeforeSave: false });
 
-    // Log the redemption
+    // Log redemption
     await Redemption.create({
       user: user._id,
       item: item._id,
@@ -65,30 +68,57 @@ router.post("/market/:id/redeem", isLoggedIn, async (req, res) => {
       message: req.body.message || ""
     });
 
-    req.flash("success", `Redeemed "${item.title}" for ${item.costPoints} points. Thank you!`);
-    res.redirect("/market");
+    // Build certificate URL
+    const certificateUrl = `/certificate/${item._id}`;
+
+    // Return updated data for frontend AJAX
+    res.json({
+      success: true,
+      points: user.points,
+      badges: user.badges,
+      earned: user.transactions.filter(t => t.type === 'earn').reduce((s,t)=>s+t.points,0),
+      redeemed: user.transactions.filter(t => t.type === 'redeem').reduce((s,t)=>s+t.points,0),
+      certificateUrl
+    });
   } catch (err) {
-    console.error("Redeem error:", err);
-    req.flash("error", "Failed to redeem item");
+    console.error(err);
+    res.json({ success: false, error: "Failed to redeem item" });
+  }
+});
+
+
+
+
+
+// ---------------------------
+// Redeem statistics
+// ---------------------------
+router.get("/redeem-stats", isLoggedIn, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const tx = user.transactions || [];
+
+    const earned = tx.filter(t => t.type === "earn").reduce((s, t) => s + t.points, 0);
+    const redeemed = tx.filter(t => t.type === "redeem").reduce((s, t) => s + Math.abs(t.points), 0);
+
+    res.render("market/stats", {
+      title: "Redeem Analytics | EcoTrack",
+      pageCSS: ["marketStats"],
+      currentUser: req.user,
+      earned,
+      redeemed,
+      tx
+    });
+  } catch (err) {
+    console.error("Redeem stats error:", err);
+    req.flash("error", "Failed to load redeem stats");
     res.redirect("/market");
   }
 });
-router.get("/redeem-stats", isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const tx = user.transactions || [];
 
-  const earned = tx.filter(t => t.type === "earn").reduce((s, t) => s + t.points, 0);
-  const redeemed = tx.filter(t => t.type === "redeem").reduce((s, t) => s + Math.abs(t.points), 0);
-
-  res.render("market/stats", {
-    title: "Redeem Analytics | Equil",
-    pageCSS: ["marketStats"],
-    currentUser: req.user,
-    earned,
-    redeemed,
-    tx
-  });
-});
+// ---------------------------
+// Generate certificate
+// ---------------------------
 router.get("/certificate/:id", isLoggedIn, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
+
+// Badge Schema
 const badgeSchema = new mongoose.Schema({
   id: String,           // short id e.g. 'green_beginner'
   name: String,         // display name
   description: String,
   earnedAt: Date
 }, { _id: false });
+
+// Transaction Schema
 const transactionSchema = new mongoose.Schema({
   name: String,
   type: { type: String, enum: ["earn", "redeem"], required: true },
@@ -13,17 +17,29 @@ const transactionSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
+// Last CO2 Calculation Schema
+const calculationSchema = new mongoose.Schema({
+  total: { type: Number, required: true },
+  breakdown: {
+    travel: { type: Number, default: 0 },
+    energy: { type: Number, default: 0 },
+    food: { type: Number, default: 0 },
+    waste: { type: Number, default: 0 },
+  },
+  createdAt: { type: Date, default: Date.now }
+}, { _id: false });
 
+// User Schema
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: true,
       trim: true,
-       default: function () {
-      if (this.email) return this.email.split("@")[0];
-      return "User_" + Math.floor(Math.random() * 10000);
-    }
+      default: function () {
+        if (this.email) return this.email.split("@")[0];
+        return "User_" + Math.floor(Math.random() * 10000);
+      }
     },
     email: {
       type: String,
@@ -50,22 +66,23 @@ const userSchema = new mongoose.Schema(
       default: 0,
     },
     badges: { type: [badgeSchema], default: [] },
-    points: { type: Number, default: 0 }, // <-- new field
-     streak: {
-    current: { type: Number, default: 0 },      // current active streak count (days)
-    lastActivityAt: { type: Date, default: null } // last day when user logged an activity
+    points: { type: Number, default: 0 },
+    streak: {
+      current: { type: Number, default: 0 },
+      lastActivityAt: { type: Date, default: null }
+    },
+    weeklyCO2Cache: { type: Number, default: 0 },
+    pointsEarned: { type: Number, default: 0 },
+    pointsRedeemed: { type: Number, default: 0 },
+    transactions: [transactionSchema],
+    lastQuizAt: { type: Date, default: null },
+    lastCalculation: { type: calculationSchema, default: null }, // <-- NEW
+    createdAt: { type: Date, default: Date.now }
   },
-  weeklyCO2Cache: { type: Number, default: 0 },
-  pointsEarned: { type: Number, default: 0 },
-  pointsRedeemed: { type: Number, default: 0 },
-  transactions: [transactionSchema],
-  lastQuizAt: { type: Date, default: null },
-  createdAt: { type: Date, default: Date.now }
-  },
-  
-  { timestamps: true } // ✅ adds createdAt and updatedAt automatically
+  { timestamps: true } // adds createdAt & updatedAt automatically
 );
-// ✅ Ensure username always exists before saving
+
+// Ensure username always exists before saving
 userSchema.pre("save", function (next) {
   if (!this.username && this.email) {
     this.username = this.email.split("@")[0];
@@ -75,7 +92,7 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-// Passport plugin to handle hashing & authentication
+// Passport plugin for authentication
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 
 module.exports = mongoose.model("User", userSchema);
