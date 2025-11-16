@@ -8,7 +8,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const path = require("path");
 const User = require("./models/user");
 const userRoutes = require("./routes/user");
-const activityRoutes = require("./routes/activity");
+
 const chatRoutes = require("./routes/chat");
 const ejslayouts = require("express-ejs-layouts");
 const leaderboardRoutes = require("./routes/leaderboard");
@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/", userRoutes);
-app.use("/", activityRoutes);
+
 app.use("/", chatRoutes);
 app.use("/", leaderboardRoutes);
 app.use("/community", communityRoutes);
